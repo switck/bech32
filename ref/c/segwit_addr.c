@@ -212,7 +212,9 @@ int segwit_addr_decode_detailed(int* witver, uint8_t* witdata, size_t* witdata_l
     if (data[0] > 0 && enc != BECH32_ENCODING_BECH32M) return 0;
 
     if(hrp_out) {
-        strncpy(hrp_out, hrp_actual, 20);
+        size_t hrp_len = strlen(hrp_actual);
+        if (hrp_len >= 20) return 0;
+        memcpy(hrp_out, hrp_actual, hrp_len + 1);
     }
 
     return 1;
